@@ -23,13 +23,13 @@ class Search:
         m = (l+r)//2
         if(l > r):
             return
-        else:
-            if(arr[m] == target):
-                return m
-            elif(arr[m] < target):
-                return self.binary_search_recursive(arr, target, m+1, r)
-            elif(arr[m] > target):
-                return self.binary_search_recursive(arr, target, l, m-1)
+
+        if(arr[m] == target):
+            return m
+        elif(arr[m] < target):
+            return self.binary_search_recursive(arr, target, m+1, r)
+        elif(arr[m] > target):
+            return self.binary_search_recursive(arr, target, l, m-1)
 
 
 searching = Search()
