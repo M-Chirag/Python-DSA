@@ -1,14 +1,14 @@
 from collections import deque
 
 
-class TreeNode(object):
+class TreeNode:
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
 
-class Solution(object):
+class Solution:
     def printBST(self, root):
         if not root:
             return
@@ -104,6 +104,83 @@ class Solution(object):
             lvl += 1
         return bfs
 
+    def inorder(self, root):  # prints BST in sorted order O(nlogn)
+        if not root:
+            return
+        self.inorder(root.left)
+        print(root.val)
+        self.inorder(root.right)
+
+    def Iterativeinorder(self, root):
+
+        curr = root
+        stack = []
+        res = []
+
+        while True:
+            while curr:
+                stack.append(curr)
+                curr = curr.left
+            if not stack:
+                break
+            curr = stack.pop()
+            res.append(curr.val)
+            curr = curr.right
+        return res
+
+    def preorder(self, root):
+
+        if not root:
+            return
+        print(root.val)
+        self.preorder(root.left)
+        self.preorder(root.right)
+
+    def preorderIterative(self, root):
+
+        stack = []
+        res = []
+        curr = root
+        while True:
+            while curr:
+                res.append(curr.val)
+                stack.append(curr)
+                curr = curr.left
+            if not stack:
+                break
+            curr = stack.pop()
+            curr = curr.right
+        return res
+
+    def postorder(self, root):
+        if not root:
+            return
+        self.postorder(root.left)
+        self.postorder(root.right)
+        print(root.val)
+
+    # iterative postorder traversal using 2 stacks
+    def postorderIterative2Stacks(self, root):
+
+        stack1 = []
+        stack2 = []
+
+        if not root:
+            return
+        else:
+            stack1.append(root)
+
+        while stack1:
+
+            curr = stack1.pop()
+            stack2.append(curr.val)
+            if curr.left:
+                stack1.append(curr.left)
+            if curr.right:
+                stack1.append(curr.right)
+        stack2.reverse()
+        print(stack2)
+
 
 sol = Solution()
 root = TreeNode(4)
@@ -117,4 +194,8 @@ sol.insertIntoBST(root, 3)
 
 # sol.remove(root, 4)
 # print("After removing:")
-print(sol.bfsTraversal(root))
+# print(sol.bfsTraversal(root))
+# print(sol.Iterativeinorder(root))
+# sol.preorder(root)
+sol.postorderIterative2Stacks(root)
+# print(sol.preorderIterative(root))
