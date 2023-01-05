@@ -84,6 +84,30 @@ def dp(profit, weight, capacity):
     # print(dp)
     return dp[N-1][M]
 
+# Space optimized DP solution as we only need 2 rows at any given time
+# TC = O(m*n) SC = O(2*m)= O(m)
+
+
+def dpSpaceOptimized(profit, weight, capacity):
+
+    N, M = len(profit), capacity
+    dp = [0]*(M+1)
+
+    for i in range(N):
+        curRow = [0]*(M+1)
+        for c in range(1, M+1):
+
+            skip = dp[c]
+
+            include = 0
+            newCap = c-weight[i]
+            if newCap >= 0:
+                include = profit[i]+dp[newCap]
+
+            curRow[c] = max(include, skip)
+        dp = curRow
+    return dp[M]
+
 
 profit = [4, 4, 7, 1]
 weight = [5, 2, 3, 1]
@@ -91,4 +115,5 @@ capacity = 8
 
 # print(dfs(profit, weight, capacity))
 # print(memo(profit, weight, capacity))
-print(dp(profit, weight, capacity))
+# print(dp(profit, weight, capacity))
+print(dpSpaceOptimized(profit, weight, capacity))
